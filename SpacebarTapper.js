@@ -1,6 +1,12 @@
 class SpacebarTapper {
-	constructor() {
-		this.regions = [0]
+	constructor(sentence, audio) {
+		console.log("pls works");
+		this.regions = [0];
+		this.colors = [];
+		this.sentenceChunks = sentence.split(" ");
+		this.makeButtons();
+
+		console.log(this.sentenceChunks);
 
 		this.wavesurfer = WaveSurfer.create({
 		    container: '#waveform',
@@ -9,7 +15,7 @@ class SpacebarTapper {
 	        ]
 		});
 
-		this.wavesurfer.load('english.mp3');
+		this.wavesurfer.load(audio);
 
 		this.wavesurfer.on('ready', function() {
 	        var st = new window.soundtouch.SoundTouch(
@@ -80,16 +86,65 @@ class SpacebarTapper {
 		this.wavesurfer.setPlaybackRate(x);
 	}
 
-	makeARegion() {
+	makeButtons () {
+		for (let i=0; i<this.sentenceChunks.length; i++) {
+			var btn = document.createElement('button');
+			btn.setAttribute('class','word-button')
+			btn.setAttribute('id', 'word-' + i)
+			btn.appendChild(document.createTextNode(this.sentenceChunks[i]));
+			document.body.appendChild(btn);
+			this.btns = $('.word-button');
+		}
+		for (let i=0; i<this.btns.length; i++) {
+			$("#word-" + i).click(function () {
+				console.log($('#word-' + i).index());
+			});
+		}
+	}
+
+	/*makeARegion() {
 		console.log("making a range");
 		let s = this.regions[this.regions.length-1];
 		let e = this.wavesurfer.getCurrentTime();
+		this.colors.push(this.getRandomColor());
 		this.regions.push(e);
 		this.wavesurfer.addRegion({
+			id: this.regions.length - 2,
 			start: s,
 			end: e,
-			color: this.getRandomColor()
+			color: this.colors[this.colors.length-1] + ', 0.5'
 		});
+		this.recolorButtons();
+	}*/
+
+	// When M key is pressed
+	addMarker() {
+		if (this.regions.length >= this.sentenceChunks.length) {
+			this.regions.pop();
+		}
+		this.regions.push(this.wavesurfer.getCurrentTime());
+		this.makeRegions()
+	}
+
+	makeRegions() {
+		this.colors.push(this.getRandomColor());
+		this.wavesurfer.clearRegions();
+		this.regions.sort(this.compare);
+		for (let i=1; i<this.regions.length; i++) {
+			this.wavesurfer.addRegion({
+				start: this.regions[i-1],
+				end: this.regions[i],
+				color: this.colors[i-1] + ', 0.5'
+			});
+			this.recolorButtons();
+		}
+		console.log(this.regions);
+	}
+
+	recolorButtons() {
+		for (let c = 0; c<this.colors.length; c++) {
+			$('#word-' + c).css('background-color', this.colors[c]);
+		}
 	}
 
 	getRandomColor() {
@@ -103,7 +158,11 @@ class SpacebarTapper {
 	  let g = Math.floor(Math.random() * 256);
 	  let b = Math.floor(Math.random() * 256);
 
-	  return('rgba(' + r + ', ' + g + ', ' + b + ', 0.5)');
+	  return('rgba(' + r + ', ' + g + ', ' + b);
+	}
+
+	compare(a, b) {
+		return a-b;
 	}
 
 }

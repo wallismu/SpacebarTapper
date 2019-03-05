@@ -3,6 +3,7 @@
       <title>Spacebar Tapper</title>
       <!-- <link rel=stylesheet href=style.css /> -->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="custom.css">
       <script>
           document.addEventListener("DOMContentLoaded", function() {
               st = new SpacebarTapper("They are flying and diving, jumping and crawling.", "english.mp3");
@@ -17,12 +18,28 @@
 
     </head>
     <body>
+      <div id="waveform-container">
         <div id="waveform"></div>
-        <button type="button" class="btn btn-primary" id="playpause">Play/Pause</button>
-        <button type="button" class="btn btn-primary" id="full">100% speed</button>
-        <button type="button" class="btn btn-primary" id="half">50% speed</button>
-        <button type="button" class="btn btn-primary" id="quarter">25% speed</button>
-        <button type="button" class="btn btn-primary" id="write">WRITE TO FILE</button>
+      </div>
+      <div id="tools-container">
+        <div id="tools-controls">
+          <button type="button" class="btn btn-primary" id="playpause">Play/Pause</button>
+          <button type="button" class="btn btn-primary" id="full">100% speed</button>
+          <button type="button" class="btn btn-primary" id="half">50% speed</button>
+          <button type="button" class="btn btn-primary" id="quarter">25% speed</button>
+          <button type="button" class="btn btn-danger id="write">WRITE TO FILE</button>
+        </div>
+        <div id="divider"></div>
+        <div id="tools-words">
+        </div>
+
+         <div id="info">
+        Spacebar: play and pause<br>
+        M: create marker
+      </div>
+
+      </div>
+
 
     </body>
 </html>

@@ -2,7 +2,25 @@ class SpacebarTapper {
 	constructor(sentence, audio) {
 		console.log("pls works");
 		this.regions = [0];
-		this.colors = [];
+		this.colors = ['rgba(250,162,27',
+					   'rgba(4,184,237',
+					   'rgba(0,165,116',
+					   'rgba(243,231,55',
+					   'rgba(0,120,184',
+					   'rgba(242,101,34',
+					   'rgba(229,128,174']
+		
+		// Really lazy way to expand colors
+		// Enough for a 28 word sentence
+		// If a sentence is 29 words?
+		// ¯\_(ツ)_/¯
+		// I could write something very nice and elegant to handle this but EH
+		for (let i=0; i<3; i++) {
+			for (let c=0; c<7; c++) {
+				this.colors.push(this.colors[c]);
+			}
+		}
+
 		this.sentenceChunks = sentence.split(" ");
 		this.makeButtons();
 
@@ -102,11 +120,12 @@ class SpacebarTapper {
 
 	makeButtons () {
 		for (let i=0; i<this.sentenceChunks.length; i++) {
+			var buttonToolbar = document.getElementById("tools-words");
 			var btn = document.createElement('button');
-			btn.setAttribute('class','word-button')
+			btn.setAttribute('class','word-button btn btn-primary');
 			btn.setAttribute('id', 'word-' + i)
 			btn.appendChild(document.createTextNode(this.sentenceChunks[i]));
-			document.body.appendChild(btn);
+			buttonToolbar.appendChild(btn);
 			this.btns = $('.word-button');
 		}
 		
@@ -141,8 +160,12 @@ class SpacebarTapper {
 		this.makeRegions()
 	}
 
+	// Erase existing regions
+	// Loop thru and recreate
+	// Useful if a new division is made in the middle somewhere
+	// Maintain correct order
+	// Bloop
 	makeRegions() {
-		this.colors.push(this.getRandomColor());
 		this.wavesurfer.clearRegions();
 		this.regions.sort(this.compare);
 		for (let i=1; i<this.regions.length; i++) {
@@ -150,15 +173,15 @@ class SpacebarTapper {
 				id: i,
 				start: this.regions[i-1],
 				end: this.regions[i],
-				color: this.colors[i-1] + ', 0.5'
+				color: this.colors[i-1] + ', 0.5)'
 			});
 			this.recolorButtons();
 		}
 	}
 
 	recolorButtons() {
-		for (let c = 0; c<this.colors.length; c++) {
-			$('#word-' + c).css('background-color', this.colors[c]);
+		for (let r=0; r<this.regions.length-1; r++) {
+			$('#word-' + r).css('background-color', this.colors[r]);
 		}
 	}
 

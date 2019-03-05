@@ -1,0 +1,40 @@
+#waveform-container {
+	margin: 30px;
+}
+
+#tools-container {
+	margin: 30px;
+	display: grid;
+	grid-template-columns: 3fr 1fr 5fr;
+}
+
+#tools-controls {
+	background-color: white;
+}
+
+#tools-words {
+	background-color: white;
+}
+
+.btn {
+	width: 200px;
+	padding: 10px;
+	margin: 10px;
+}
+
+.word-button {
+	color: black;
+	background-color: lightGray;
+	border: 0;
+}
+
+#divider {
+	width: 1px;
+	margin: 0px;
+    background-image: linear-gradient(white, darkGray, darkGray, darkGray, white);
+}
+
+#info {
+	margin-top: 40px;
+	margin-left: 20px;
+}

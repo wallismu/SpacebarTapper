@@ -11,7 +11,10 @@ class SpacebarTapper {
 		this.wavesurfer = WaveSurfer.create({
 		    container: '#waveform',
 	        plugins: [
-	            WaveSurfer.regions.create({})
+	            WaveSurfer.regions.create({
+	            	showTime: false,
+	            	color: '#ff0c00'
+	            })
 	        ]
 		});
 
@@ -76,7 +79,6 @@ class SpacebarTapper {
 	            seekingPos = ~~(this.wavesurfer.backend.getPlayedPercents() * length);
 	        }.bind(this));
 	    }.bind(this));
-
 	}
 
 	playPause () {
@@ -85,6 +87,17 @@ class SpacebarTapper {
 
 	setPlaybackRate (x) {
 		this.wavesurfer.setPlaybackRate(x);
+	}
+
+	buttonPress(i) {
+		/*console.log(this.sentenceChunks[i]);
+		console.log(this.regions);
+		let length = this.wavesurfer.getDuration();
+		this.wavesurfer.seekTo(this.regions[i]/length);
+		this.wavesurfer.playPause();*/
+		console.log(this.wavesurfer.regions.list[i]);
+		this.wavesurfer.regions.list[i].play();
+
 	}
 
 	makeButtons () {
@@ -96,15 +109,13 @@ class SpacebarTapper {
 			document.body.appendChild(btn);
 			this.btns = $('.word-button');
 		}
+		
 		for (let i=0; i<this.btns.length; i++) {
 			$("#word-" + i).click(function () {
-				this.buttonPress(i);
-			});
+				this.buttonPress(i+1);
+			}.bind(this));
 		}
 	}
-
-	buttonPress(i):
-		cons
 
 	/*makeARegion() {
 		console.log("making a range");
@@ -136,6 +147,7 @@ class SpacebarTapper {
 		this.regions.sort(this.compare);
 		for (let i=1; i<this.regions.length; i++) {
 			this.wavesurfer.addRegion({
+				id: i,
 				start: this.regions[i-1],
 				end: this.regions[i],
 				color: this.colors[i-1] + ', 0.5'
@@ -168,4 +180,16 @@ class SpacebarTapper {
 		return a-b;
 	}
 
+	getRegions() {
+		return this.regions;
+	}
+
+	writeRegionsToFile() {
+		//console.log("Writing to a file :3c");
+		const fs = require('fs');
+		let data = "Test file contents";
+		fs.writeFile('regions.txt', data, (err) => {
+			if (err) throw err;
+		})
+	}
 }

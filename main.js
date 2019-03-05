@@ -26,11 +26,21 @@ $(document).ready(function(){
 		st.setPlaybackRate(.25);
 	});
 
+    $("#write").click(function () {
+        console.log("writetofile");
+        st.writeRegionsToFile();
+    })
+
 	document.body.onkeyup = function(e){
-    if(e.keyCode == 77){
-        console.log("M pressed");
-        //makeARegion(wavesurfer, wavesurfer.getCurrentTime());
-        st.addMarker();
-    	}
+	    if(e.keyCode == 77){
+	        console.log("M pressed");
+	        //makeARegion(wavesurfer, wavesurfer.getCurrentTime());
+	        st.addMarker();
+	    }
+		if(e.keyCode == 32){
+	        console.log("Spcebar pressed");
+	        //makeARegion(wavesurfer, wavesurfer.getCurrentTime());
+	        st.playPause();
+	    }
 	}
 })

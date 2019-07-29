@@ -27,8 +27,13 @@ $(document).ready(function(){
 	});
 
     $("#write").click(function () {
-        console.log("writetofile");
-        st.writeRegionsToFile();
+        console.log("saving?");
+        st.exportRegions();
+    })
+
+    $("#restart").click(function () {
+        console.log("restarting");
+        st.clearRegions();
     })
 
 	document.body.onkeyup = function(e){

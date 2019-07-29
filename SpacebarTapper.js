@@ -10,7 +10,7 @@ class SpacebarTapper {
 					   'rgba(242,101,34',
 					   'rgba(229,128,174']
 		
-		// Really lazy way to expand colors
+		// Extremely lazy way to expand colors
 		// Enough for a 28 word sentence
 		// If a sentence is 29 words?
 		// ¯\_(ツ)_/¯
@@ -175,13 +175,26 @@ class SpacebarTapper {
 				end: this.regions[i],
 				color: this.colors[i-1] + ', 0.5)'
 			});
-			this.recolorButtons();
+			this.recolorButtons(true);
 		}
 	}
 
-	recolorButtons() {
-		for (let r=0; r<this.regions.length-1; r++) {
-			$('#word-' + r).css('background-color', this.colors[r]);
+	clearRegions() {
+		this.recolorButtons(false);
+		this.wavesurfer.clearRegions();
+		this.regions = [0];	
+	}
+
+	recolorButtons(withColor) {
+		if (withColor) {
+			for (let r=0; r<this.regions.length-1; r++) {
+				$('#word-' + r).css('background-color', this.colors[r]);
+			}
+		}
+		else {
+			for (let r=0; r<this.regions.length-1; r++) {
+				$('#word-' + r).css('background-color', "lightGray");
+			}
 		}
 	}
 
@@ -207,12 +220,8 @@ class SpacebarTapper {
 		return this.regions;
 	}
 
-	writeRegionsToFile() {
-		//console.log("Writing to a file :3c");
-		const fs = require('fs');
-		let data = "Test file contents";
-		fs.writeFile('regions.txt', data, (err) => {
-			if (err) throw err;
-		})
+	exportRegions() {
+		// This might eventually look different?
+		return this.regions;
 	}
 }

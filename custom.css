@@ -31,7 +31,7 @@
 #divider {
 	width: 1px;
 	margin: 0px;
-    background-image: linear-gradient(white, darkGray, darkGray, darkGray, white);
+    	background-image: linear-gradient(white, darkGray, darkGray, darkGray, white);
 }
 
 #info {

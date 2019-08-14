@@ -13,3 +13,6 @@ As the user taps the **M key** (no longer the spacebar!), I add that point in th
 
 #### Appendix
 A note on the colors: My original implementation generated a random color for each region. Sometimes two colors next to each other would be very similar, and certain colors were indistinguishable for people with colorblindedness. We did some research, and with some help from a colorblind co-worker, chose a group of colors that were far easier to tell apart. A fully-colorblind system could use different symbols to diffrentiate region to region, but since this is just experimental, we figured this is "good for now." 
+
+#### Demo
+Click [here](https://wallispubbly.github.io/SpacebarTapper/) to take a look.
